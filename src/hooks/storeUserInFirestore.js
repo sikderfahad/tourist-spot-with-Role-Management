@@ -14,7 +14,8 @@ export const storeUserInFirestore = async (user, role = "user") => {
       });
       console.log("User doc created in firestore");
     } else {
-      console.log("user doc already exist in firestore");
+      // console.log("user doc already exist in firestore");
+      return;
     }
   } catch (err) {
     console.log(`Error when user data store in firestore: ${err}`);

@@ -1,0 +1,21 @@
+@keyframes rgb-border {
+  0% {
+    border-color: red;
+  }
+  33% {
+    border-color: green;
+  }
+  66% {
+    border-color: blue;
+  }
+  100% {
+    border-color: red;
+  }
+}
+
+.moving-border {
+  border: 1px solid; /* Visible border */
+  animation: rgb-border 3s infinite linear; /* Color animation */
+  padding: 5px; /* Space inside the border */
+  display: inline-block; /* Adjust for content */
+}

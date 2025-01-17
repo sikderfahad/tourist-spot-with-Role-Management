@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Spinner from "../spinner/Spinner";
 
 const Header = () => {
-  const { user, logout, loading } = useContext(AuthContext);
-  console.log(user);
+  const { user, role, logout, loading } = useContext(AuthContext);
+  // console.log(role);
 
   const handleLogout = async () => {
     try {
@@ -19,8 +19,8 @@ const Header = () => {
   const navigate = useNavigate();
   const navs = [
     { path: "/", name: "home" },
-    { path: "/all-tourists-spot", name: "all tourists spot" },
-    { path: "/add-tourists-spot", name: "add tourists spot" },
+    { path: "/all-tourist-spot", name: "all tourists spot" },
+    { path: "/add-tourist-spot", name: "add tourists spot" },
     { path: "/my-list", name: "my list" },
   ];
 

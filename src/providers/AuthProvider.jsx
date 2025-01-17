@@ -8,7 +8,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase.config";
 import { doc, getDoc } from "firebase/firestore";
 import { fetchUserRole } from "../hooks/fetchRole";
@@ -20,8 +20,8 @@ const AuthProvider = ({ children }) => {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const getRoleData = fetchUserRole();
-  console.log("get role data info: ", getRoleData);
+  const getRoleData = fetchUserRole(user?.uid);
+  // console.log("get role data info: ", getRoleData);
 
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();

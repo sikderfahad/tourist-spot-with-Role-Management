@@ -1,9 +1,11 @@
-import React from "react";
+import AwesomeCarousel from "../../components/awesomeSlider/AwesomeSlider";
 
 const Home = () => {
   return (
     <div>
-      <h1> THis is my baper home</h1>{" "}
+      <div className="">
+        <AwesomeCarousel />
+      </div>
     </div>
   );
 };

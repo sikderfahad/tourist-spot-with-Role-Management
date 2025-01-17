@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ const SocialLoginBtn = () => {
   const { googleLogin, githubLogin } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
+  // console.log(location);
 
   const redirectPath = location?.state?.from?.pathname;
 
