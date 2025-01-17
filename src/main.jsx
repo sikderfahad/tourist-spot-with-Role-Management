@@ -15,6 +15,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AllTouristSpot from "./pages/allTouristSpot/AllTouristSpot.jsx";
 import ViewDetails from "./pages/viewDetails/ViewDetails.jsx";
 import { fetchSpotDetails } from "./hooks/services.js";
+import UpdateTouristSpot from "./pages/updateTouristSpot/UpdateTouristSpot.jsx";
 
 export const SERVER_BASE_URL = "http://localhost:3000";
 
@@ -57,6 +58,15 @@ const router = createBrowserRouter([
             <AddTouristSpot />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "update-tourist-spot/:id",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "user"]}>
+            <UpdateTouristSpot />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => fetchSpotDetails(params.id),
       },
       {
         path: "view-spot-details/:id",

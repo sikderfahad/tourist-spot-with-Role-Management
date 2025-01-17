@@ -36,12 +36,18 @@ const TableRow = ({ spot }) => {
         </span>
       </td>
       <td>{spot?.seasonality}</td>
-      <th>
+      <th className="flex flex-col gap-5">
         <button
           onClick={() => navigate(`/view-spot-details/${spot?._id}`)}
           className="btn btn-ghost btn-xs"
         >
-          details
+          Details
+        </button>
+        <button
+          onClick={() => navigate(`/update-tourist-spot/${spot?._id}`)}
+          className="btn btn-ghost btn-xs"
+        >
+          Update info
         </button>
       </th>
     </tr>

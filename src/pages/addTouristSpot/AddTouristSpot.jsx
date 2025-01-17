@@ -31,7 +31,7 @@ const AddTouristSpot = () => {
       average_cost: data.average_cost,
       seasonality: data.seasonality,
       travel_time: data.travel_time,
-      total_visitors_per_year: data.total_visitors_per_year,
+      total_visitors_per_year: data.tota_visitors_per_year,
       userName: user?.displayName,
       userEmail: user?.email,
     };
