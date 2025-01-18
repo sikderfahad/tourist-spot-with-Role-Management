@@ -3,7 +3,7 @@ import Input from "../Input/Input";
 import FileInput from "../fileInput/FileInput";
 
 const AUForm = ({ handleForm, inputError, update, spotInfo }) => {
-  console.log(spotInfo);
+  // console.log(spotInfo);
 
   return (
     <div className="w-10/12 mx-auto p-10 my-10">

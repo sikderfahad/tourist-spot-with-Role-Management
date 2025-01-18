@@ -9,8 +9,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await logout();
-      console.log(res);
+      await logout();
     } catch (err) {
       console.log(`Error when logout: ${err}`);
     }

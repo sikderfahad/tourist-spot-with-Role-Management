@@ -17,7 +17,8 @@ import ViewDetails from "./pages/viewDetails/ViewDetails.jsx";
 import { fetchSpotDetails } from "./hooks/services.js";
 import UpdateTouristSpot from "./pages/updateTouristSpot/UpdateTouristSpot.jsx";
 
-export const SERVER_BASE_URL = "http://localhost:3000";
+// export const SERVER_BASE_URL = "http://localhost:3000";
+export const SERVER_BASE_URL = "https://tourist-server-zeta.vercel.app";
 
 const queryClient = new QueryClient();
 

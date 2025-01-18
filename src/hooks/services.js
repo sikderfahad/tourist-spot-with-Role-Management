@@ -6,7 +6,6 @@ const fetchUserData = async (email) => {
 
   try {
     const { data } = await axios.get(url);
-    console.log(url);
     return data;
   } catch (err) {
     console.log(`Error when fetching all spots data: ${err}`);
@@ -18,7 +17,6 @@ const fetchAllData = async () => {
 
   try {
     const { data } = await axios.get(url);
-    console.log(url);
     return data;
   } catch (err) {
     console.log(`Error when fetching users all spots data: ${err}`);
@@ -30,7 +28,6 @@ const fetchSpotDetails = async (id) => {
 
   try {
     const { data } = await axios.get(url);
-    console.log(url);
     return data;
   } catch (err) {
     console.log(`Error when fetching a single spots data: ${err}`);

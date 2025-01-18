@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 
-const TableRow = ({ spot }) => {
+const TableRow = ({ spot, handleDeleteSpot }) => {
   const navigate = useNavigate();
+
   return (
-    <tr>
+    <tr className="my-10">
       <th>
         <label>
           <input type="checkbox" className="checkbox" />
@@ -39,15 +40,23 @@ const TableRow = ({ spot }) => {
       <th className="flex flex-col gap-5">
         <button
           onClick={() => navigate(`/view-spot-details/${spot?._id}`)}
-          className="btn btn-ghost btn-xs"
+          className="btn btn-success "
         >
           Details
         </button>
+
         <button
           onClick={() => navigate(`/update-tourist-spot/${spot?._id}`)}
-          className="btn btn-ghost btn-xs"
+          className="btn btn-info "
         >
           Update info
+        </button>
+
+        <button
+          onClick={() => handleDeleteSpot(spot?._id)}
+          className="btn bg-red-600 text-white "
+        >
+          Delete this spot
         </button>
       </th>
     </tr>

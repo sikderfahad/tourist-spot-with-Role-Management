@@ -18,6 +18,7 @@ const AddTouristSpot = () => {
 
     if (Object.keys(errors).length > 0) {
       setInputError(errors);
+      console.log(Object.keys(errors).length);
       return;
     }
     setInputError({});
@@ -31,7 +32,7 @@ const AddTouristSpot = () => {
       average_cost: data.average_cost,
       seasonality: data.seasonality,
       travel_time: data.travel_time,
-      total_visitors_per_year: data.tota_visitors_per_year,
+      total_visitors_per_year: data.total_visitors_per_year,
       userName: user?.displayName,
       userEmail: user?.email,
     };
@@ -39,13 +40,14 @@ const AddTouristSpot = () => {
     try {
       // get image info from cloudinary
       const spotPhotoInfo = await getPhotoUrl(data?.photo);
-      const { secure_url, asset_folder, asset_id, public_id } = spotPhotoInfo;
       if (!spotPhotoInfo) {
         console.log(`Image hosting error`);
       }
+      const { secure_url, asset_folder, asset_id, public_id } = spotPhotoInfo;
+
       const imgHostingInfo = { secure_url, asset_folder, asset_id, public_id };
       newSpotData.imgHostingInfo = imgHostingInfo;
-
+      console.log(newSpotData);
       try {
         const res = await axios.post(
           `${SERVER_BASE_URL}/tourist-spot`,
@@ -56,12 +58,12 @@ const AddTouristSpot = () => {
         }
         alert(res?.data?.message);
         e.target.reset();
-        console.log(res?.data);
+        // console.log(res?.data);
       } catch (err) {
         console.log(`Error when post new spot data: ${err}`);
       }
 
-      console.log(newSpotData);
+      // console.log(newSpotData);
     } catch (err) {
       console.log(`Error when host image from add page: ${err}`);
     }

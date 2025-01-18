@@ -11,6 +11,7 @@ const getPhotoUrl = async (photo) => {
       imgData
     );
     const imgHostingInfo = imgRes?.data;
+    // console.log(imgHostingInfo);
     return imgHostingInfo;
   } catch (err) {
     console.log(`Error when hosting image: ${err}`);

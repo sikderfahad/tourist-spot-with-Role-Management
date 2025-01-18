@@ -13,7 +13,7 @@ const ViewDetails = () => {
     travel_time,
     total_visitors_per_year,
   } = spot.data;
-  console.log(spot);
+  // console.log(spot);
 
   return (
     <div className="w-10/12 mx-auto my-10">
@@ -61,7 +61,7 @@ const ViewDetails = () => {
           <li className="text-lg font-medium">
             <span className="">Total visitors per year: </span>
             <span className="text-green-600 font-bold">
-              {total_visitors_per_year} person
+              {total_visitors_per_year ? total_visitors_per_year : "No"} person
             </span>
           </li>
         </ul>
