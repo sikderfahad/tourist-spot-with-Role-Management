@@ -1,13 +1,9 @@
-import React, { useContext } from "react";
-import {
-  Link,
-  Navigate,
-  replace,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthForm from "../../components/auhForm/AuthForm";
 import { AuthContext } from "../../providers/AuthProvider";
+import axios from "axios";
+import { SERVER_BASE_URL } from "../../main";
 
 const Login = () => {
   const { signIn, loading } = useContext(AuthContext);
@@ -26,7 +22,16 @@ const Login = () => {
     try {
       const res = await signIn(email, pass);
       if (res?.user) {
-        navigate(redirectPath || "/", { replace: true });
+        const user = res?.user?.email;
+        const jwtRes = axios.post(
+          `${SERVER_BASE_URL}/jwt`,
+          { user },
+          { withCredentials: true }
+        );
+        if (jwtRes?.data?.success) {
+          console.log(`jwt token create success`);
+          navigate(redirectPath || "/", { replace: true });
+        }
       }
     } catch (err) {
       console.log(`Error when login: ${err}`);

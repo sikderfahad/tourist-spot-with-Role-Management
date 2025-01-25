@@ -1,6 +1,6 @@
 import React from "react";
 
-const TableSkeleton = () => {
+const RowSkeleton = () => {
   return (
     <>
       <div className="flex w-full gap-10">
@@ -13,4 +13,4 @@ const TableSkeleton = () => {
   );
 };
 
-export default TableSkeleton;
+export default RowSkeleton;

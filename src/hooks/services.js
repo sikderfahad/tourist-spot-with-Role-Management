@@ -2,13 +2,19 @@ import axios from "axios";
 import { SERVER_BASE_URL } from "../main";
 
 const fetchUserData = async (email) => {
-  const url = `${SERVER_BASE_URL}/tourist-spot/user/${email}`;
+  // const url = `/tourist-spot/user/${email}`;
+  if (!email) {
+    console.log(`email not found`);
+    // return { data: [] };
+  }
 
   try {
-    const { data } = await axios.get(url);
+    const url = `${SERVER_BASE_URL}/tourist-spot/user/${email}`;
+    const { data } = await axios.get(url, { withCredentials: true });
     return data;
   } catch (err) {
     console.log(`Error when fetching all spots data: ${err}`);
+    // return { data: [] };
   }
 };
 

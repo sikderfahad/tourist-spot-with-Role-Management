@@ -2,14 +2,17 @@ import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Spinner from "../spinner/Spinner";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Header = () => {
   const { user, role, logout, loading } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
   // console.log(role);
 
   const handleLogout = async () => {
     try {
       await logout();
+      await axiosSecure.post("/jwt-logout", null);
     } catch (err) {
       console.log(`Error when logout: ${err}`);
     }
