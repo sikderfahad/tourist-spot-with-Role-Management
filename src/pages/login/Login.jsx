@@ -2,11 +2,10 @@ import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthForm from "../../components/auhForm/AuthForm";
 import { AuthContext } from "../../providers/AuthProvider";
-import axios from "axios";
-import { SERVER_BASE_URL } from "../../main";
+import jwtSignin from "../../hooks/jwtSignin";
 
 const Login = () => {
-  const { signIn, loading } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   //   console.log(location);
@@ -23,15 +22,7 @@ const Login = () => {
       const res = await signIn(email, pass);
       if (res?.user) {
         const user = res?.user?.email;
-        const jwtRes = axios.post(
-          `${SERVER_BASE_URL}/jwt`,
-          { user },
-          { withCredentials: true }
-        );
-        if (jwtRes?.data?.success) {
-          console.log(`jwt token create success`);
-          navigate(redirectPath || "/", { replace: true });
-        }
+        jwtSignin(user, redirectPath, navigate);
       }
     } catch (err) {
       console.log(`Error when login: ${err}`);

@@ -1,20 +1,24 @@
 import TableRow from "../../components/tableRow/TableRow";
 
 import "./style.css";
-import { SERVER_BASE_URL } from "../../main";
-import axios from "axios";
 import { useFetchUserData } from "../../hooks/useFetchUserData";
 import RowSkeleton from "../../components/rowSkeleton/rowSkeleton";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import ErrorContent from "../../components/errorContent/ErrorContent";
 
 const MyList = () => {
+  const axiosSecure = useAxiosSecure();
   const { data: spotList, isLoading, refetch, error } = useFetchUserData();
-  console.log(spotList);
+
+  // console.log(spotList);
 
   const handleDeleteSpot = async (id) => {
     try {
-      const deleteRes = await axios.delete(
-        `${SERVER_BASE_URL}/tourist-spot/${id}`
-      );
+      // const deleteRes = await axios.delete(
+      //   `${SERVER_BASE_URL}/tourist-spot/${id}`
+      // );
+
+      const deleteRes = await axiosSecure.delete(`/tourist-spot/${id}`);
       if (!deleteRes?.data?.success) {
         return alert(deleteRes?.data?.message);
       }
@@ -24,6 +28,11 @@ const MyList = () => {
       console.log(`Error when deleting spot data: ${err}`);
     }
   };
+
+  if (error?.response?.status === 401 || error?.response?.status === 403) {
+    console.log(error);
+    return <ErrorContent />;
+  }
 
   return (
     <div className="w-10/12 mx-auto my-10 text-center">

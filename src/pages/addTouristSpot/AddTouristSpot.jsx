@@ -5,10 +5,12 @@ import getPhotoUrl from "../../hooks/getPhotoUrl";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../../main";
 import { AuthContext } from "../../providers/AuthProvider";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AddTouristSpot = () => {
   const { user } = useContext(AuthContext);
   const [inputError, setInputError] = useState({});
+  const axiosSecure = useAxiosSecure();
   const handleForm = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -49,10 +51,13 @@ const AddTouristSpot = () => {
       newSpotData.imgHostingInfo = imgHostingInfo;
       console.log(newSpotData);
       try {
-        const res = await axios.post(
-          `${SERVER_BASE_URL}/tourist-spot`,
-          newSpotData
-        );
+        // const res = await axios.post(
+        //   `${SERVER_BASE_URL}/tourist-spot`,
+        //   newSpotData
+        // );
+
+        const res = await axiosSecure.post("/tourist-spot", newSpotData);
+
         if (!res?.data?.success) {
           return alert(res?.data?.message);
         }

@@ -7,7 +7,7 @@ export const useFetchUserData = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data, isLoading, refetch, error } = useQuery({
-    queryKey: user?.email ? ["spotList", user?.email] : null,
+    queryKey: ["spotList", user?.email],
     queryFn: async () => {
       const url = `/tourist-spot/user/${user?.email}`;
       const spotListRes = await axiosSecure.get(url);
@@ -16,6 +16,6 @@ export const useFetchUserData = () => {
     enabled: !!user?.email,
   });
 
-  console.log(data);
+  // console.log(data);
   return { data, isLoading, refetch, error };
 };

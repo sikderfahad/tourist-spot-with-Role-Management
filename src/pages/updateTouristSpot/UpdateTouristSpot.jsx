@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AUForm from "../../components/AUForm/AUForm";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { validateForm } from "../../hooks/validateForm";
 import getPhotoUrl from "../../hooks/getPhotoUrl";
-import axios from "axios";
-import { SERVER_BASE_URL } from "../../main";
+import useFetchSpotDetails from "../../hooks/useFetchSpotDetails";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const UpdateTouristSpot = () => {
-  const spotInfo = useLoaderData();
+  // const spotInfo = useLoaderData();
+  const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
+
+  const { data: spotInfo } = useFetchSpotDetails(id);
+  // console.log("data from updata page: ", spotInfo);
+
   const [inputError, setInputError] = useState({});
   const navigate = useNavigate();
   const handleForm = async (e) => {
@@ -49,32 +55,37 @@ const UpdateTouristSpot = () => {
           public_id,
         };
         updatedSpotData.imgHostingInfo = imgHostingInfo;
-        updatedSpotData.ex_public_id =
-          spotInfo?.data?.imgHostingInfo?.public_id;
+        updatedSpotData.ex_public_id = spotInfo?.imgHostingInfo?.public_id;
       } catch (err) {
-        console.log(`Error when host image while update spot info`);
+        console.log(`Error when host image while update spot info: ${err}`);
       }
     }
 
     try {
-      const updateRes = await axios.patch(
-        `${SERVER_BASE_URL}/tourist-spot/${spotInfo?.data?._id}`,
+      // const updateRes = await axios.patch(
+      //   `${SERVER_BASE_URL}/tourist-spot/${spotInfo?._id}`,
+      //   updatedSpotData
+      // );
+
+      const updateRes = await axiosSecure.patch(
+        `/tourist-spot/${spotInfo?._id}`,
         updatedSpotData
       );
+
       if (!updateRes?.data?.success) {
         return alert(updateRes?.data?.message);
       }
       alert(updateRes?.data?.message);
       e.target.reset();
-      navigate(`/view-spot-details/${spotInfo?.data?._id}`);
+      navigate(`/view-spot-details/${spotInfo?._id}`);
     } catch (err) {
-      console.log(`Error when hosting updating spot data in MongoDB`);
+      console.log(`Error when hosting updating spot data in MongoDB: ${err}`);
     }
   };
   return (
     <div>
       <AUForm
-        spotInfo={spotInfo?.data}
+        spotInfo={spotInfo}
         update={true}
         handleForm={handleForm}
         inputError={inputError}

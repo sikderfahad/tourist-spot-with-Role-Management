@@ -1,7 +1,43 @@
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import useFetchSpotDetails from "../../hooks/useFetchSpotDetails";
+import Spinner from "../../components/spinner/Spinner";
 
 const ViewDetails = () => {
-  const spot = useLoaderData();
+  // const spot = useLoaderData();
+  const { id } = useParams();
+  const { data, isLoading, error } = useFetchSpotDetails(id);
+  // console.log(data);
+
+  if (isLoading) {
+    return (
+      <div className="w-full text-center">
+        <Spinner />{" "}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full">
+        <h1 className="text-red-600 text-2xl my-10 animate-pulse font-bold text-center">
+          An error occurd please try again later
+        </h1>
+        ;
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="w-full">
+        <h1 className="text-red-600 text-2xl my-10 animate-pulse font-bold text-center">
+          No data found of this spot
+        </h1>
+        ;
+      </div>
+    );
+  }
+
   const {
     spot_name,
     imgHostingInfo,
@@ -12,7 +48,7 @@ const ViewDetails = () => {
     seasonality,
     travel_time,
     total_visitors_per_year,
-  } = spot.data;
+  } = data;
   // console.log(spot);
 
   return (

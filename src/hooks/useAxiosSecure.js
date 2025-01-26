@@ -1,9 +1,11 @@
 import axios from "axios";
 import useAuth from "./useAuth";
 import { SERVER_BASE_URL } from "../main";
+import { useNavigate } from "react-router-dom";
 
 const useAxiosSecure = () => {
   const { logout } = useAuth();
+  const navigate = useNavigate();
   const axiosSecure = axios.create({
     // baseURL: "http://localhost:3000",
     baseURL: "https://tourist-server-zeta.vercel.app",
@@ -12,12 +14,12 @@ const useAxiosSecure = () => {
 
   axiosSecure.interceptors.response.use(
     (res) => {
-      console.log(res);
+      // console.log(res);
       return res;
     },
     async (error) => {
-      console.log(error);
-      if (error?.status === 401 || error?.status === 403) {
+      // console.log(error);
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
         try {
           const { data } = await axios.post(
             `${SERVER_BASE_URL}/jwt-logout`,
@@ -31,6 +33,7 @@ const useAxiosSecure = () => {
           console.log(`jwt logout error`, error);
         }
         await logout();
+        navigate("/login");
       }
       return Promise.reject(error);
     }

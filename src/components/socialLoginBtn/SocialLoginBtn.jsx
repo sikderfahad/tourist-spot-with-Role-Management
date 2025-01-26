@@ -2,8 +2,7 @@ import { useContext } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { SERVER_BASE_URL } from "../../main";
+import jwtSignin from "../../hooks/jwtSignin";
 
 const SocialLoginBtn = () => {
   const { googleLogin, githubLogin } = useContext(AuthContext);
@@ -17,24 +16,7 @@ const SocialLoginBtn = () => {
     try {
       const res = await googleLogin();
       const user = res?.user?.email;
-
-      if (!user) {
-        return console.log(`user email not found in user`);
-      }
-
-      try {
-        const jwtRes = await axios.post(
-          `${SERVER_BASE_URL}/jwt`,
-          { user },
-          { withCredentials: true }
-        );
-        console.log(jwtRes, user);
-        if (jwtRes?.data?.success) {
-          navigate(redirectPath || "/", { replace: true });
-        }
-      } catch (err) {
-        console.log(`error when create access token: ${err}`);
-      }
+      jwtSignin(user, redirectPath, navigate);
     } catch (err) {
       console.log(`Error when google Login: ${err}`);
     }
@@ -43,9 +25,8 @@ const SocialLoginBtn = () => {
   const handleGithubLogin = async () => {
     try {
       const res = await githubLogin();
-      const userEmail = res?.user?.email;
-      console.log(userEmail);
-      navigate(redirectPath || "/", { replace: true });
+      const user = res?.user?.email;
+      jwtSignin(user, redirectPath, navigate);
     } catch (err) {
       console.log(`Error when google Login: ${err}`);
     }
